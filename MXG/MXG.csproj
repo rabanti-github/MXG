@@ -41,13 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractXmlElement.cs" />
-    <Compile Include="Validator.cs" />
+    <Compile Include="Core\AbstractXmlDocument.cs" />
+    <Compile Include="Core\AbstractXmlElement.cs" />
+    <Compile Include="Core\Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmlAttribute.cs" />
-    <Compile Include="XmlDocument.cs" />
-    <Compile Include="XmlException.cs" />
-    <Compile Include="XmlElement.cs" />
+    <Compile Include="Core\XmlAttribute.cs" />
+    <Compile Include="Core\XmlDocument.cs" />
+    <Compile Include="Core\XmlException.cs" />
+    <Compile Include="Core\XmlElement.cs" />
+    <Compile Include="Relationships\XmlRelationships.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

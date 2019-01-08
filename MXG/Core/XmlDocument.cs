@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MXG
+namespace MXG.Core
 {
-    public class XmlDocument
+    public class XmlDocument : AbstractXmlDocument
     {
 
         private const string DEFAULT_XML_DECLARATION = "<?xml version=\"1.0\"";
@@ -56,10 +56,12 @@ namespace MXG
         /// <param name="skipNameCheck">If true, the name will not be validated (optional, default: true)</param>
         /// <param name="content">Inner string content of the element (optional, default: null)</param>
         /// <param name="escapeContent">If true, the content will be escaped (optional, default: false)</param>
-        public void AddChild(string name, string nameSpace, bool skipNameCheck = true, string content = null, bool escapeContent = false)
+        /// <returns>Added XML element</returns>
+        public XmlElement AddChild(string name, string nameSpace, bool skipNameCheck = true, string content = null, bool escapeContent = false)
         {
             XmlElement element = XmlElement.CreateXmlElement(name, nameSpace, skipNameCheck, content, escapeContent);
             this.children.Add(element);
+            return element;
         }
 
         /// <summary>
@@ -69,16 +71,18 @@ namespace MXG
         /// <param name="nameSpace">Name space of the element (optional; default: null)</param>
         /// <param name="content">Inner string content of the element (optional, default: null)</param>
         /// <param name="escapeContent">If true, the content will be escaped (optional, default: false)</param>
-        public void AddChild(string name, bool skipNameCheck = true, string content = null, bool escapeContent = false)
+        /// <returns>Added XML element</returns>
+        public XmlElement AddChild(string name, bool skipNameCheck = true, string content = null, bool escapeContent = false)
         {
             XmlElement element = XmlElement.CreateXmlElement(name, null, skipNameCheck, content, escapeContent);
             this.children.Add(element);
+            return element;
         }
 
         /// <summary>
         /// Method to add a child element to the document
         /// </summary>
-        /// <param name="element">Prepared XmlElement obkect</param>
+        /// <param name="element">Prepared XmlElement object</param>
         public void AddChild(XmlElement element)
         {
             this.children.Add(element);
@@ -88,7 +92,7 @@ namespace MXG
         /// Gets the string of the entire XML document
         /// </summary>
         /// <returns>Non-beautified XML string</returns>
-        public string GetXmlString()
+        public override string GetXmlString()
         {
             int len = this.children.Count;
             for(int i = 0; i < len; i++)

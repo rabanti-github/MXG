@@ -7,7 +7,7 @@
 
 using System;
 
-namespace MXG
+namespace MXG.Core
 {
     /// <summary>
     /// General MXG exception

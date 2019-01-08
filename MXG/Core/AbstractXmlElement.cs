@@ -7,7 +7,7 @@
 
 using System.Text;
 
-namespace MXG
+namespace MXG.Core
 {
     public abstract class AbstractXmlElement
     {

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MXG
+namespace MXG.Core
 {
     public class Validator
     {
