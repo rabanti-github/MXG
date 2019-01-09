@@ -14,13 +14,20 @@ namespace MXG.Relationships
     /// </summary>
     public class XmlRelationships: AbstractXmlDocument
     {
+        private const string XMLNS_NAME = "xmlns";
+        private const string ID_NAME = "Id";
+        private const string TYPE_NAME = "Type";
+        private const string TARGET_NAME = "Target";
+        private const string RELATIONSHIPS_NAME = "Relationships";
+        private const string RELATIONSHIP_NAME = "Relationship";
+
         private XmlElement relationships;
 
         /// <summary>
         /// Gets the relationship elements
         /// </summary>
         /// <value>
-        /// Relationship elements triples (id, type and target)
+        /// Relationship document which contains the element triples (id, type and target)
         /// </value>
         public XmlDocument RelationshipDocument { get; private set; }
 
@@ -32,8 +39,8 @@ namespace MXG.Relationships
         public XmlRelationships(string xmlns, int estimatedElementCount = 10)
         {
             this.RelationshipDocument = new XmlDocument(estimatedElementCount);
-            this.relationships = XmlElement.CreateXmlElement("Relationships", true, null, false, estimatedElementCount, 1);
-            this.relationships.AddAttribute("xmlns", xmlns, true, false);
+            this.relationships = XmlElement.CreateXmlElement(RELATIONSHIPS_NAME, true, null, false, estimatedElementCount, 1);
+            this.relationships.AddAttribute(XMLNS_NAME, xmlns, true, false);
             this.RelationshipDocument.AddChild(this.relationships);
         }
 
@@ -43,12 +50,12 @@ namespace MXG.Relationships
         /// <param name="id">Unique ID</param>
         /// <param name="type">Type, usually an URL to an XML scheme</param>
         /// <param name="target">Target path to the document which is identified by id and described by type</param>
-        public void AddRelationShip(string id, string type, string target)
+        public void AddRelationship(string id, string type, string target)
         {
-            XmlElement element = new XmlElement("Relationship", null, null, 0, 3);
-            element.AddAttribute("Id", id, true, false);
-            element.AddAttribute("Type", type, true, false);
-            element.AddAttribute("Target", target, true, false);
+            XmlElement element = new XmlElement(RELATIONSHIP_NAME, null, null, 0, 3);
+            element.AddAttribute(ID_NAME, id, true, false);
+            element.AddAttribute(TYPE_NAME, type, true, false);
+            element.AddAttribute(TARGET_NAME, target, true, false);
             this.relationships.AddChild(element);
         }
 

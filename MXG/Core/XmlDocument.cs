@@ -15,6 +15,12 @@ namespace MXG.Core
 
         private const string DEFAULT_XML_DECLARATION = "<?xml version=\"1.0\"";
         private const int DEFAULT_STRING_BUILDER_SIZE = 512;
+        private const string ENCODING_NAME = " encoding=\"";
+        private const string STANDALONE_NAME_YES = " standalone=\"yes\"";
+        private const string STANDALONE_NAME_NO = " standalone =\"no\"";
+        private const string CLOSING_QUOT = "\"";
+        private const string XML_TERMINATOR = "?>";
+        private const string UTF8_NAME = "UTF-8";
 
         private List<XmlElement> children;
         private StringBuilder documentBuilder;
@@ -25,27 +31,27 @@ namespace MXG.Core
         /// <param name="estimatedElementCount">Estimated element count (for list initialization; default: 10)</param>
         /// <param name="encoding">Encoding of the document (default: UTF-8)</param>
         /// <param name="standalone">Standalone flag of the document (default: true)</param>
-        public XmlDocument(int estimatedElementCount = 10, string encoding = "UTF-8", bool? standalone = true)
+        public XmlDocument(int estimatedElementCount = 10, string encoding = UTF8_NAME, bool? standalone = true)
         {
             this.documentBuilder = new StringBuilder(DEFAULT_STRING_BUILDER_SIZE);
             this.children = new List<XmlElement>(estimatedElementCount);
             this.documentBuilder.Append(DEFAULT_XML_DECLARATION);
             if (!string.IsNullOrEmpty(encoding))
             {
-                this.documentBuilder.Append(" encoding=\"").Append(encoding).Append("\"");
+                this.documentBuilder.Append(ENCODING_NAME).Append(encoding).Append(CLOSING_QUOT);
             }
             if (standalone.HasValue)
             {
                 if (standalone.Value == true)
                 {
-                    this.documentBuilder.Append(" standalone=\"yes\"");
+                    this.documentBuilder.Append(STANDALONE_NAME_YES);
                 }
                 else
                 {
-                    this.documentBuilder.Append(" standalone =\"no\"");
+                    this.documentBuilder.Append(STANDALONE_NAME_NO);
                 }
             }
-            this.documentBuilder.Append("?>");
+            this.documentBuilder.Append(XML_TERMINATOR);
         }
 
         /// <summary>

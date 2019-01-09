@@ -11,6 +11,9 @@ namespace MXG.Core
 {
     public class XmlAttribute : AbstractXmlElement
     {
+        private const string EQUAL_TOKEN = "=\"";
+        private const string DELIMITER_TOKEN = "\" ";
+
         /// <summary>
         /// Creates an XML attribute with a name and an optional value
         /// </summary>
@@ -64,7 +67,7 @@ namespace MXG.Core
             }
             else
             {
-                builder.Append(this.Name).Append("=\"").Append(this.Value).Append("\" ");
+                builder.Append(this.Name).Append(EQUAL_TOKEN).Append(this.Value).Append(DELIMITER_TOKEN);
             }
         }
 

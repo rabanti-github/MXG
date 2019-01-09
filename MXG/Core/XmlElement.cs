@@ -12,6 +12,13 @@ namespace MXG.Core
 {
     public class XmlElement : AbstractXmlElement
     {
+        private const string EMPTY_TAG_TERMINATOR = "/>";
+        private const string TAG_TERMINATOR = "</";
+        private const char TAG_END_CHAR = '>';
+        private const char TAG_START_CHAR = '<';
+        private const char NAMESPACE_DELIMITER = ':';
+        private const char EMPTY_CHAR = ' ';
+
         private int estimatedChildCount;
         private int estimatedAttributeCount;
 
@@ -98,7 +105,7 @@ namespace MXG.Core
         /// <param name="escapeContent">If true, the content will be escaped (optional, default: false)</param>
         /// <param name="estimatedChildCount">Estimated child count (optional; default: 10; for list initialization)</param>
         /// <param name="estimatedAttributeCount">Estimated attribute count (optional; default: 10; for list initialization)</param>
-        /// <returns>Xml element</returns>
+        /// <returns>XML element</returns>
         public static XmlElement CreateXmlElement(string name, bool skipNameCheck = true, string content = null, bool escapeContent = false, int estimatedChildCount = 10, int estimatedAttributeCount = 10)
         {
             return XmlElement.CreateXmlElement(name, null, skipNameCheck, content, escapeContent, estimatedChildCount, estimatedAttributeCount);
@@ -157,10 +164,10 @@ namespace MXG.Core
         /// <param name="builder">Document string builder</param>
         public override void AppendXmlString(StringBuilder builder)
         {
-            builder.Append('<');
+            builder.Append(TAG_START_CHAR);
             if (this.HasNameSpace)
             {
-                builder.Append(this.NameSpace).Append(':');
+                builder.Append(this.NameSpace).Append(NAMESPACE_DELIMITER);
             }
             builder.Append(this.Name);
             int len, i;
@@ -169,7 +176,7 @@ namespace MXG.Core
                 len = this.Attributes.Count;
                 for (i = 0; i < len; i++)
                 {
-                    builder.Append(' ');
+                    builder.Append(EMPTY_CHAR);
                     //sb.Append(this.Attributes[i].GetXmlString());
                     this.Attributes[i].AppendXmlString(builder);
                 }
@@ -178,26 +185,25 @@ namespace MXG.Core
             {
                 if (this.IsEmpty)
                 {
-                    builder.Append("/>");
+                    builder.Append(EMPTY_TAG_TERMINATOR);
                 }
                 else
                 {
-                    builder.Append('>').Append(this.Value).Append("</").Append(this.Name).Append('>');
+                    builder.Append(TAG_END_CHAR).Append(this.Value).Append(TAG_TERMINATOR).Append(this.Name).Append(TAG_END_CHAR);
                 }
             }
             else
             {
                 len = this.Children.Count;
-                builder.Append('>');
+                builder.Append(TAG_END_CHAR);
                 if (len > 0)
                 {
                     for (i = 0; i < len; i++)
                     {
-                        //sb.Append(this.Children[i].GetXmlString());
                         this.Children[i].AppendXmlString(builder);
                     }
                 }
-                builder.Append("</").Append(this.Name).Append('>');
+                builder.Append(TAG_TERMINATOR).Append(this.Name).Append(TAG_END_CHAR);
             }
         }
 
