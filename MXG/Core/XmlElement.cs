@@ -12,12 +12,7 @@ namespace MXG.Core
 {
     public class XmlElement : AbstractXmlElement
     {
-        private const string EMPTY_TAG_TERMINATOR = "/>";
-        private const string TAG_TERMINATOR = "</";
-        private const char TAG_END_CHAR = '>';
-        private const char TAG_START_CHAR = '<';
-        private const char NAMESPACE_DELIMITER = ':';
-        private const char EMPTY_CHAR = ' ';
+
 
         private int estimatedChildCount;
         private int estimatedAttributeCount;
@@ -164,10 +159,10 @@ namespace MXG.Core
         /// <param name="builder">Document string builder</param>
         public override void AppendXmlString(StringBuilder builder)
         {
-            builder.Append(TAG_START_CHAR);
+            builder.Append(Constants.TAG_START_CHAR);
             if (this.HasNameSpace)
             {
-                builder.Append(this.NameSpace).Append(NAMESPACE_DELIMITER);
+                builder.Append(this.NameSpace).Append(Constants.NAMESPACE_DELIMITER);
             }
             builder.Append(this.Name);
             int len, i;
@@ -176,7 +171,7 @@ namespace MXG.Core
                 len = this.Attributes.Count;
                 for (i = 0; i < len; i++)
                 {
-                    builder.Append(EMPTY_CHAR);
+                    builder.Append(Constants.EMPTY_CHAR);
                     //sb.Append(this.Attributes[i].GetXmlString());
                     this.Attributes[i].AppendXmlString(builder);
                 }
@@ -185,17 +180,17 @@ namespace MXG.Core
             {
                 if (this.IsEmpty)
                 {
-                    builder.Append(EMPTY_TAG_TERMINATOR);
+                    builder.Append(Constants.EMPTY_TAG_TERMINATOR);
                 }
                 else
                 {
-                    builder.Append(TAG_END_CHAR).Append(this.Value).Append(TAG_TERMINATOR).Append(this.Name).Append(TAG_END_CHAR);
+                    builder.Append(Constants.TAG_END_CHAR).Append(this.Value).Append(Constants.TAG_TERMINATOR).Append(this.Name).Append(Constants.TAG_END_CHAR);
                 }
             }
             else
             {
                 len = this.Children.Count;
-                builder.Append(TAG_END_CHAR);
+                builder.Append(Constants.TAG_END_CHAR);
                 if (len > 0)
                 {
                     for (i = 0; i < len; i++)
@@ -203,7 +198,7 @@ namespace MXG.Core
                         this.Children[i].AppendXmlString(builder);
                     }
                 }
-                builder.Append(TAG_TERMINATOR).Append(this.Name).Append(TAG_END_CHAR);
+                builder.Append(Constants.TAG_TERMINATOR).Append(this.Name).Append(Constants.TAG_END_CHAR);
             }
         }
 

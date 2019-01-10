@@ -43,13 +43,14 @@
   <ItemGroup>
     <Compile Include="Core\AbstractXmlDocument.cs" />
     <Compile Include="Core\AbstractXmlElement.cs" />
+    <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\XmlAttribute.cs" />
     <Compile Include="Core\XmlDocument.cs" />
     <Compile Include="Core\XmlException.cs" />
     <Compile Include="Core\XmlElement.cs" />
-    <Compile Include="Relationships\XmlContenTypes.cs" />
+    <Compile Include="Relationships\XmlContentTypes.cs" />
     <Compile Include="Relationships\XmlDocumentCollection.cs" />
     <Compile Include="Relationships\XmlRelationships.cs" />
   </ItemGroup>

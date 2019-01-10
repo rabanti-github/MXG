@@ -12,12 +12,6 @@ namespace MXG.Core
 {
     public class Validator
     {
-        private const string ESCAPE_LT = "&lt;";
-        private const string ESCAPE_GT = "&gt;";
-        private const string  ESCAPE_AMP = "&amp;";
-        private const string ESCAPE_QUOT = "&quot;";
-        private const char SANITIZING_CHAR = ' ';
-
         /// <summary>
         /// Method to escape XML characters in an XML attribute
         /// </summary>
@@ -165,19 +159,19 @@ namespace MXG.Core
                 switch(invalidCharacters[i].characterType)
                 {
                     case ValidatorTuple.CaracterType.IllegalCharacter:
-                        sb.Append(Validator.SANITIZING_CHAR); // Whitespace as fall back on illegal character
+                        sb.Append(Constants.SANITIZING_CHAR); // Whitespace as fall back on illegal character
                         break;
                     case ValidatorTuple.CaracterType.Lt:  // replace <
-                        sb.Append(Validator.ESCAPE_LT);
+                        sb.Append(Constants.ESCAPE_LT);
                         break;
                     case ValidatorTuple.CaracterType.Gt: // replace >
-                        sb.Append(Validator.ESCAPE_GT);
+                        sb.Append(Constants.ESCAPE_GT);
                         break;
                     case ValidatorTuple.CaracterType.Amp: // replace &
-                        sb.Append(Validator.ESCAPE_AMP);
+                        sb.Append(Constants.ESCAPE_AMP);
                         break;
                     case ValidatorTuple.CaracterType.Quot: // replace "
-                        sb.Append(Validator.ESCAPE_QUOT);
+                        sb.Append(Constants.ESCAPE_QUOT);
                         break;
                 }
                 lastIndex = invalidCharacters[i].character + 1;

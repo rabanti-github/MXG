@@ -14,13 +14,6 @@ namespace MXG.Relationships
     /// </summary>
     public class XmlRelationships: AbstractXmlDocument
     {
-        private const string XMLNS_NAME = "xmlns";
-        private const string ID_NAME = "Id";
-        private const string TYPE_NAME = "Type";
-        private const string TARGET_NAME = "Target";
-        private const string RELATIONSHIPS_NAME = "Relationships";
-        private const string RELATIONSHIP_NAME = "Relationship";
-
         private XmlElement relationships;
 
         /// <summary>
@@ -39,8 +32,8 @@ namespace MXG.Relationships
         public XmlRelationships(string xmlns, int estimatedElementCount = 10)
         {
             this.RelationshipDocument = new XmlDocument(estimatedElementCount);
-            this.relationships = XmlElement.CreateXmlElement(RELATIONSHIPS_NAME, true, null, false, estimatedElementCount, 1);
-            this.relationships.AddAttribute(XMLNS_NAME, xmlns, true, false);
+            this.relationships = XmlElement.CreateXmlElement(Constants.RELATIONSHIPS_NAME, true, null, false, estimatedElementCount, 1);
+            this.relationships.AddAttribute(Constants.XMLNS_NAME, xmlns, true, false);
             this.RelationshipDocument.AddChild(this.relationships);
         }
 
@@ -52,10 +45,10 @@ namespace MXG.Relationships
         /// <param name="target">Target path to the document which is identified by id and described by type</param>
         public void AddRelationship(string id, string type, string target)
         {
-            XmlElement element = new XmlElement(RELATIONSHIP_NAME, null, null, 0, 3);
-            element.AddAttribute(ID_NAME, id, true, false);
-            element.AddAttribute(TYPE_NAME, type, true, false);
-            element.AddAttribute(TARGET_NAME, target, true, false);
+            XmlElement element = new XmlElement(Constants.RELATIONSHIP_NAME, null, null, 0, 3);
+            element.AddAttribute(Constants.ID_NAME, id, true, false);
+            element.AddAttribute(Constants.TYPE_NAME, type, true, false);
+            element.AddAttribute(Constants.TARGET_NAME, target, true, false);
             this.relationships.AddChild(element);
         }
 
