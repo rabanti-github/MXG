@@ -117,7 +117,7 @@ namespace MXG.Core
         {
             this.estimatedAttributeCount = estimatedAttributeCount;
             this.estimatedChildCount = estimatedChildCount;
-            if (NameSpace != null)
+            if (nameSpace != null)
             {
                 this.NameSpace = nameSpace;
                 this.HasNameSpace = true;

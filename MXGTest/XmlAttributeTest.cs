@@ -63,7 +63,7 @@ namespace MXGTest
         {
             XmlAttribute attribute = new XmlAttribute("att");
             attribute.SetContent(value, escapeValue);
-            Assert.That(excpectedValue, Is.EqualTo(attribute.Value));
+            Assert.That(attribute.Value, Is.EqualTo(excpectedValue));
         }
 
         [Description("Test the function GetXmlString")]
@@ -78,7 +78,7 @@ namespace MXGTest
             attribute.SetContent(value, escapeValue);
             StringBuilder sb = new StringBuilder();
             attribute.AppendXmlString(sb);
-            Assert.That(excpectedString, Is.EqualTo(sb.ToString()));
+            Assert.That(sb.ToString(), Is.EqualTo(excpectedString));
         }
 
         [Description("Test the Exception Handling of the Factory method")]
@@ -99,12 +99,12 @@ namespace MXGTest
         [TestCase("x\xB7_att", false, false)]// valid
         [TestCase("", false, true)]          // invalid
         [TestCase(null, false, true)]        // invalid
-        public void NameErrorTest(string name, bool skipNameCheck, bool exceptionExcepted)
+        public void NameErrorTest(string name, bool skipNameCheck, bool exceptionExpected)
         {
             try
             {
                 XmlAttribute.CreateXmlAttribute(name, null, skipNameCheck, false);
-                if (exceptionExcepted)
+                if (exceptionExpected)
                 {
                     Assert.Fail();
                     return;
@@ -112,7 +112,7 @@ namespace MXGTest
             }
             catch(Exception e)
             {
-                if (!exceptionExcepted)
+                if (!exceptionExpected)
                 {
                     Assert.Fail();
                 }
