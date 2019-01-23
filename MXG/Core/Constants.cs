@@ -22,7 +22,6 @@ namespace MXG.Core
         public const string ESCAPE_AMP = "&amp;";
         public const string ESCAPE_QUOT = "&quot;";
         public const string EQUAL_TOKEN = "=\"";
-        public const string DELIMITER_TOKEN = "\" ";
         public const string DEFAULT_XML_DECLARATION = "<?xml version=\"1.0\"";
         public const string ENCODING_NAME = " encoding=\"";
         public const string STANDALONE_NAME_YES = " standalone=\"yes\"";

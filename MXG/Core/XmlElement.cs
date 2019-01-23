@@ -138,7 +138,21 @@ namespace MXG.Core
         }
 
         /// <summary>
-        /// Adds an attribute to the element
+        /// Adds an empty attribute to the element
+        /// </summary>
+        /// <param name="name">Name of the attribute</param>
+        /// <param name="skipNameCheck">If true, the name will not be validated (default: true)</param>
+        public void AddAttribute(string name, bool skipNameCheck = true)
+        {
+            if (this.Attributes == null)
+            {
+                this.Attributes = new List<XmlAttribute>(this.estimatedAttributeCount);
+            }
+            this.Attributes.Add(XmlAttribute.CreateXmlAttribute(name, null, skipNameCheck, false));
+        }
+
+        /// <summary>
+        /// Adds an attribute with value to the element
         /// </summary>
         /// <param name="name">Name of the attribute</param>
         /// <param name="value">Value of the attribute</param>
@@ -171,34 +185,38 @@ namespace MXG.Core
                 len = this.Attributes.Count;
                 for (i = 0; i < len; i++)
                 {
-                    builder.Append(Constants.EMPTY_CHAR);
-                    //sb.Append(this.Attributes[i].GetXmlString());
+                  //  builder.Append(Constants.EMPTY_CHAR);
                     this.Attributes[i].AppendXmlString(builder);
                 }
             }
-            if (this.Children == null || this.Children.Count == 0 || this.IsEmpty)
+            if ((this.Children == null || this.Children.Count == 0) && this.IsEmpty)
             {
-                if (this.IsEmpty)
-                {
-                    builder.Append(Constants.EMPTY_TAG_TERMINATOR);
-                }
-                else
-                {
-                    builder.Append(Constants.TAG_END_CHAR).Append(this.Value).Append(Constants.TAG_TERMINATOR).Append(this.Name).Append(Constants.TAG_END_CHAR);
-                }
+                builder.Append(Constants.EMPTY_TAG_TERMINATOR);
             }
             else
             {
-                len = this.Children.Count;
                 builder.Append(Constants.TAG_END_CHAR);
-                if (len > 0)
+                if (!this.IsEmpty)
                 {
-                    for (i = 0; i < len; i++)
+                    builder.Append(this.Value);
+                }
+                if (this.Children != null)
+                {
+                    len = this.Children.Count;
+                    if (len > 0)
                     {
-                        this.Children[i].AppendXmlString(builder);
+                        for (i = 0; i < len; i++)
+                        {
+                            this.Children[i].AppendXmlString(builder);
+                        }
                     }
                 }
-                builder.Append(Constants.TAG_TERMINATOR).Append(this.Name).Append(Constants.TAG_END_CHAR);
+                builder.Append(Constants.TAG_TERMINATOR);
+                if (this.HasNameSpace)
+                {
+                    builder.Append(this.NameSpace).Append(Constants.NAMESPACE_DELIMITER);
+                }
+                builder.Append(this.Name).Append(Constants.TAG_END_CHAR);
             }
         }
 
@@ -217,6 +235,13 @@ namespace MXG.Core
             {
                 this.Value = content;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            this.AppendXmlString(builder);
+            return builder.ToString();
         }
 
     }

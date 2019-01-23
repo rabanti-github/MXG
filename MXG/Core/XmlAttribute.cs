@@ -60,14 +60,10 @@ namespace MXG.Core
         /// <param name="builder">Document string builder</param>
         public override void AppendXmlString(StringBuilder builder)
         {
-            builder.Append(this.Name);
-            if (this.IsEmpty)
+            builder.Append(Constants.EMPTY_CHAR).Append(this.Name);
+            if (!this.IsEmpty)
             {
-                builder.Append(' ');
-            }
-            else
-            {
-                builder.Append(Constants.EQUAL_TOKEN).Append(this.Value).Append(Constants.DELIMITER_TOKEN);
+                builder.Append(Constants.EQUAL_TOKEN).Append(this.Value).Append(Constants.CLOSING_QUOT);
             }
         }
 

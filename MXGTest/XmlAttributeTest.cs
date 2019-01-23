@@ -67,11 +67,11 @@ namespace MXGTest
         }
 
         [Description("Test the function GetXmlString")]
-        [TestCase("att", "x1", false, "att=\"x1\" ")]
-        [TestCase("att", "", false, "att=\"\" ")]
-        [TestCase("att", "x\x4y", true, "att=\"x y\" ")]
-        [TestCase("att", null, false, "att ")]
-        [TestCase("att", null, true, "att=\"\" ")]
+        [TestCase("att", "x1", false, " att=\"x1\"")]
+        [TestCase("att", "", false, " att=\"\"")]
+        [TestCase("att", "x\x4y", true, " att=\"x y\"")]
+        [TestCase("att", null, false, " att")]
+        [TestCase("att", null, true, " att=\"\"")]
         public void GetXmlStringTest(string name, string value, bool escapeValue, string excpectedString)
         {
             XmlAttribute attribute = new XmlAttribute(name);

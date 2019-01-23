@@ -38,11 +38,11 @@ namespace MXGTest
         [Description("Test the static factory method CreateXmlElement (with name space). Name checks are omitted in this scenario")]
         [TestCase("tag", null, "t1", false, "<tag>t1</tag>", false)]
         [TestCase("tag", null, null, false, "<tag/>", false)]
-        [TestCase("tag", "", "t1", false, "<:tag>t1</tag>", true)] // However, this is not valid but accepted (assert pass) since no name check is executed though
+        [TestCase("tag", "", "t1", false, "<:tag>t1</:tag>", true)] // However, this is not valid but accepted (assert pass) since no name check is executed though
         [TestCase("tag", "", null, false, "<:tag/>", true)] // However, this is not valid but accepted (assert pass) since no name check is executed though
-        [TestCase("tag", "ns", "t1", false, "<ns:tag>t1</tag>", true)]
+        [TestCase("tag", "ns", "t1", false, "<ns:tag>t1</ns:tag>", true)]
         [TestCase("tag", "ns", null, false, "<ns:tag/>", true)]
-        [TestCase("tag", "ns", "t1", false, "<ns:tag>t1</tag>", true)]
+        [TestCase("tag", "ns", "t1", false, "<ns:tag>t1</ns:tag>", true)]
         [TestCase("tag", "ns", null, false, "<ns:tag/>", true)]
         public void CreateXmlElementTest2(string name, string nameSpace, string content, bool escapeContent, string expectedString, bool expectedNameSpace)
         {
@@ -93,6 +93,120 @@ namespace MXGTest
             }
         }
 
+        [Description("Test the method AddChild")]
+        [TestCase("tag", "subtag", "<subtag/>")]
+        [TestCase("tag", "subtag¦ns", "<ns:subtag/>")]
+        [TestCase("tag", "subtag¦ns¦content1", "<ns:subtag>content1</ns:subtag>")]
+        [TestCase("tag", "subtag|subtag2", "<subtag/>|<subtag2/>")]
+        [TestCase("tag", "subtag¦ns|subtag2¦ns2", "<ns:subtag/>|<ns2:subtag2/>")]
+        [TestCase("tag", "subtag¦ns¦content1|subtag2¦ns2¦content2", "<ns:subtag>content1</ns:subtag>|<ns2:subtag2>content2</ns2:subtag2>")]
+        public void AddChildTest(string name, string childString, string expectedChildrenString)
+        {
+            XmlElement element = new XmlElement(name);
+            string[][] children = TestUtils.SplitValues(childString, '|', '¦');
+            foreach (string[] child in children)
+            {
+                XmlElement childElement;
+                if (child.Length == 1)
+                {
+                    childElement = new XmlElement(child[0]);
+                    
+                }
+                else if (child.Length == 2)
+                {
+                    childElement = new XmlElement(child[0],child[1]);
+                }
+                else if (child.Length == 3)
+                {
+                    childElement = new XmlElement(child[0], child[1], child[2]);
+                }
+                else // Not applicable
+                {
+                    Assert.Fail();
+                    return;
+                }
+                element.AddChild(childElement);
+            }
+            string[] expectedChildren = TestUtils.SplitValues(expectedChildrenString, '|');
+            for (int i = 0; i < element.Children.Count; i++)
+            {
+                Assert.That(expectedChildren[i], Is.EqualTo(element.Children[i].ToString()));
+            }
+        }
 
-    }
+        [Description("Test the method AddChild with the entire XML element as output")]
+        [TestCase("tag", "subtag", "<tag><subtag/></tag>")]
+        [TestCase("tag2", "subtag¦ns", "<tag2><ns:subtag/></tag2>")]
+        [TestCase("tag|ns1", "subtag¦ns¦content1", "<ns1:tag><ns:subtag>content1</ns:subtag></ns1:tag>")]
+        [TestCase("tag|ns2|rootContent", "subtag|subtag2", "<ns2:tag>rootContent<subtag/><subtag2/></ns2:tag>")]
+        [TestCase("tag", "subtag¦ns|subtag2¦ns2", "<tag><ns:subtag/><ns2:subtag2/></tag>")]
+        [TestCase("tag|ns3", "subtag¦ns¦content1|subtag2¦ns2¦content2", "<ns3:tag><ns:subtag>content1</ns:subtag><ns2:subtag2>content2</ns2:subtag2></ns3:tag>")]
+        public void AddChildTest2(string name, string childString, string expectedString)
+        {
+            string[] root = TestUtils.SplitValues(name, '|');
+            XmlElement element = TestUtils.GetElement(root);
+            if (element == null)
+            {
+                Assert.Fail();
+                return;
+            }
+            string[][] children = TestUtils.SplitValues(childString, '|', '¦');
+            foreach (string[] child in children)
+            {
+                XmlElement childElement = TestUtils.GetElement(child);
+                if (childElement == null)
+                {
+                    Assert.Fail();
+                    return;
+                }
+                element.AddChild(childElement);
+
+            }
+            Assert.That(expectedString, Is.EqualTo(element.ToString()));
+        }
+
+        [Description("Test the method AddChild and AddAttribute with the entire XML element as output. !! is a placeholder for null")]
+        [TestCase("tag#att¦v1", "subtag#att2¦v2", "<tag att=\"v1\"><subtag att2=\"v2\"/></tag>")]
+        [TestCase("tag#att¦v1|att2¦v2", "subtag#att3¦v3|att4¦!!", "<tag att=\"v1\" att2=\"v2\"><subtag att3=\"v3\" att4/></tag>")]
+        /*
+        [TestCase("tag2", "subtag¦ns", "<tag2><ns:subtag/></tag2>")]
+        [TestCase("tag|ns1", "subtag¦ns¦content1", "<ns1:tag><ns:subtag>content1</ns:subtag></ns1:tag>")]
+        [TestCase("tag|ns2|rootContent", "subtag|subtag2", "<ns2:tag>rootContent<subtag/><subtag2/></ns2:tag>")]
+        [TestCase("tag", "subtag¦ns|subtag2¦ns2", "<tag><ns:subtag/><ns2:subtag2/></tag>")]
+        [TestCase("tag|ns3", "subtag¦ns¦content1|subtag2¦ns2¦content2", "<ns3:tag><ns:subtag>content1</ns:subtag><ns2:subtag2>content2</ns2:subtag2></ns3:tag>")]
+    */
+        public void AddChildTest3(string parentString, string childString, string expectedString)
+        {
+            string[] tokens = TestUtils.SplitValues(parentString, '#');
+            string[] root = TestUtils.SplitValues(tokens[0], '|');
+            XmlElement element = TestUtils.GetElement(root);
+            if (element == null)
+            {
+                Assert.Fail();
+                return;
+            }
+            if (tokens.Length == 2)
+            {
+                TestUtils.AppendXmlAttributes(ref element, tokens[1], '|', '¦', "!!");
+            }
+            tokens = TestUtils.SplitValues(childString, '#');
+            string[][] children = TestUtils.SplitValues(tokens[0], '|', '¦');
+            foreach (string[] child in children)
+            {
+                XmlElement childElement = TestUtils.GetElement(child);
+                if (childElement == null)
+                {
+                    Assert.Fail();
+                    return;
+                }
+                if (tokens.Length == 2)
+                {
+                    TestUtils.AppendXmlAttributes(ref childElement, tokens[1], '|', '¦', "!!");
+                }
+                element.AddChild(childElement);
+            }
+            Assert.That(expectedString, Is.EqualTo(element.ToString()));
+        }
+
+        }
 }
