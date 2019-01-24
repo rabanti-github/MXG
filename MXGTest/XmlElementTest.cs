@@ -44,6 +44,8 @@ namespace MXGTest
         [TestCase("tag", "ns", null, false, "<ns:tag/>", true)]
         [TestCase("tag", "ns", "t1", false, "<ns:tag>t1</ns:tag>", true)]
         [TestCase("tag", "ns", null, false, "<ns:tag/>", true)]
+        [TestCase("tag", "ns", "\x7", true, "<ns:tag> </ns:tag>", true)]
+        [TestCase("tag", null, "\x7\t\xFFFE", true, "<tag> \t </tag>", false)]
         public void CreateXmlElementTest2(string name, string nameSpace, string content, bool escapeContent, string expectedString, bool expectedNameSpace)
         {
             XmlElement element = XmlElement.CreateXmlElement(name, nameSpace, true, content, escapeContent);
@@ -208,5 +210,45 @@ namespace MXGTest
             Assert.That(expectedString, Is.EqualTo(element.ToString()));
         }
 
+        [Description("Test the Exception Handling of the XmlElement class")]
+        [TestCase("n",null, null, null, false)]       // valid
+        [TestCase("\t", null, null, null, true)]       // invalid
+        [TestCase("\n", null, null, null, true)]       // invalid
+        [TestCase("n", "n", null, null, false)]       // valid
+        [TestCase("n", "", null, null, true)]       // invalid
+        [TestCase("n", null, "x", null, false)]       // valid
+        [TestCase("n", null, "x", "y", false)]       // valid
+        [TestCase("n", null, "x", "", false)]       // valid
+        [TestCase("n", null, "", null, true)]       // invalid
+        [TestCase("n", null, "\t", null, true)]       // invalid
+        [TestCase("x", "x", "x", "\t", false)]       // valid
+        public void XmleElementErrorTest(string name, string nameSpace, string attributeName, string attributeValue, bool exceptionExpected)
+        {
+            try
+            {
+                XmlElement element = new XmlElement(name, nameSpace);
+                if (attributeName != null && attributeValue != null)
+                {
+                    element.AddAttribute(attributeName, attributeValue, false, false);
+                }
+                else if (attributeName != null && attributeValue == null)
+                {
+                    element.AddAttribute(attributeName, false);
+                }
+                if (exceptionExpected)
+                {
+                    Assert.Fail();
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                if (!exceptionExpected)
+                {
+                    Assert.Fail();
+                }
+            }
         }
+
+    }
 }

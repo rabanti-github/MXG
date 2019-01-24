@@ -69,21 +69,7 @@ namespace MXG.Core
         /// </exception>
         public static XmlElement CreateXmlElement(string name, string nameSpace, bool skipNameCheck = true, string content = null, bool escapeValue = false, int estimatedChildCount = 10, int estimatedAttributeCount = 10)
         {
-            if (!skipNameCheck)
-            {
-                if (!Validator.ValidateElementName(name))
-                {
-                    throw new XmlException("The XML element name '" + name + "' contains invalid characters or is empty");
-                }
-                if (nameSpace != null)
-                {
-                    if (!Validator.ValidateElementName(nameSpace))
-                    {
-                        throw new XmlException("The XML name space '" + name + "' contains invalid characters or is empty");
-                    }
-                }
-            }
-            XmlElement element = new XmlElement(name, nameSpace,null, estimatedChildCount, estimatedAttributeCount);
+            XmlElement element = new XmlElement(name, nameSpace,null, estimatedChildCount, estimatedAttributeCount, skipNameCheck);
             if (content != null)
             {
                 element.SetContent(content, escapeValue);
@@ -91,6 +77,7 @@ namespace MXG.Core
             return element;
         }
 
+        
         /// <summary>
         /// Static method to create an element
         /// </summary>
@@ -105,22 +92,44 @@ namespace MXG.Core
         {
             return XmlElement.CreateXmlElement(name, null, skipNameCheck, content, escapeContent, estimatedChildCount, estimatedAttributeCount);
         }
-
+        
         /// <summary>
-        /// Constructor with parameters
+        /// Constructor with parameters and name check
         /// </summary>
         /// <param name="name">Name of the element (tag name)</param>
         /// <param name="nameSpace">Optional name space</param>
         /// <param name="value">Optional value (text content)</param>
+        /// <param name="estimatedAttributeCount">Estimated number of attributes</param>
+        /// <param name="estimatedChildCount">Estimated number of child elements</param>
+        /// <param name="skipNameCheck">If true, the name will not be validated (optional, default: true)</param>
         /// <exception cref="XmlException">An XML element must contain a valid name</exception>
-        public XmlElement(string name, string nameSpace = null, string value = null, int estimatedChildCount = 10, int estimatedAttributeCount = 10) : base(name, value)
+        public XmlElement(string name, string nameSpace = null, string value = null, int estimatedChildCount = 10, int estimatedAttributeCount = 10, bool skipNameCheck = false) : base(name, value)
         {
             this.estimatedAttributeCount = estimatedAttributeCount;
             this.estimatedChildCount = estimatedChildCount;
-            if (nameSpace != null)
+            if (!skipNameCheck)
             {
-                this.NameSpace = nameSpace;
-                this.HasNameSpace = true;
+                if (!Validator.ValidateElementName(name))
+                {
+                    throw new XmlException("The XML element name '" + name + "' contains invalid characters or is empty");
+                }
+                if (nameSpace != null)
+                {
+                    if (!Validator.ValidateElementName(nameSpace))
+                    {
+                        throw new XmlException("The XML name space '" + name + "' contains invalid characters or is empty");
+                    }
+                    this.NameSpace = nameSpace;
+                    this.HasNameSpace = true;
+                }
+            }
+            else
+            {
+                if (nameSpace != null)
+                {
+                    this.NameSpace = nameSpace;
+                    this.HasNameSpace = true;
+                }
             }
         }
 
