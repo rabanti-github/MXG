@@ -35,20 +35,6 @@ namespace MXGTest
             });
         }
 
-        /*
-        [Description("Test the function CalculateCapacity indirectly by its output property Capacity")]
-        [TestCase("att", "x1", 9)]
-        [TestCase("att", "", 7)]
-        [TestCase("att", null, 4)]
-        [TestCase("att", "   ", 10)]
-        [TestCase("att", "&amp;")]
-        public void CalculateCapacityTest(string name, string value)
-        {
-            XmlAttribute attribute = new XmlAttribute(name, value);
-          //  Assert.That(expectedSize, Is.EqualTo(attribute.Capacity));
-        }
-        */
-
         [Description("Test the function SetContent indirectly by its output property Value")]
         [TestCase("x1", false, "x1")]
         [TestCase("x1", true, "x1")]
@@ -82,29 +68,29 @@ namespace MXGTest
         }
 
         [Description("Test the Exception Handling of the Factory method")]
-        [TestCase("att", true, false)]       // valid
-        [TestCase("att", false, false)]      // valid
-        [TestCase(":att", true, false)]      // valid
-        [TestCase("0att", true, false)]      // no check - valid
-        [TestCase("0att", false, true)]      // check - invalid
-        [TestCase("<x>", false, true)]       // invalid
-        [TestCase("xml", false, false)]      // valid
-        [TestCase("x y", false, true)]       // invalid
-        [TestCase("x\x4y", false, true)]     // invalid
-        [TestCase(";", false, true)]         // invalid
-        [TestCase("-att", false, true)]      // invalid
-        [TestCase("\xE4", false, false)]     // valid
-        [TestCase("_att", false, false)]     // valid
-        [TestCase("\xB7_att", false, true)]  // invalid
-        [TestCase("x\xB7_att", false, false)]// valid
-        [TestCase("", false, true)]          // invalid
-        [TestCase(null, false, true)]        // invalid
-        public void NameErrorTest(string name, bool skipNameCheck, bool exceptionExpected)
+        [TestCase("att", true, true)]       // valid
+        [TestCase("att", false, true)]      // valid
+        [TestCase(":att", true, true)]      // valid
+        [TestCase("0att", true, true)]      // no check - valid
+        [TestCase("0att", false, false)]      // check - invalid
+        [TestCase("<x>", false, false)]       // invalid
+        [TestCase("xml", false, true)]      // valid
+        [TestCase("x y", false, false)]       // invalid
+        [TestCase("x\x4y", false, false)]     // invalid
+        [TestCase(";", false, false)]         // invalid
+        [TestCase("-att", false, false)]      // invalid
+        [TestCase("\xE4", false, true)]     // valid
+        [TestCase("_att", false, true)]     // valid
+        [TestCase("\xB7_att", false, false)]  // invalid
+        [TestCase("x\xB7_att", false, true)]// valid
+        [TestCase("", false, false)]          // invalid
+        [TestCase(null, false, false)]        // invalid
+        public void NameErrorTest(string name, bool skipNameCheck, bool expected)
         {
             try
             {
                 XmlAttribute.CreateXmlAttribute(name, null, skipNameCheck, false);
-                if (exceptionExpected)
+                if (!expected)
                 {
                     Assert.Fail();
                     return;
@@ -112,7 +98,7 @@ namespace MXGTest
             }
             catch(Exception e)
             {
-                if (!exceptionExpected)
+                if (expected)
                 {
                     Assert.Fail();
                 }

@@ -90,6 +90,7 @@ namespace MXG.Core
             {
                 if (!Validator.ValidateStartCharacter(name[i]))
                 {   // Check additional, allowed characters after first character
+                    /*
                     if (!(name[i] == 0x2D ||    // -
                         name[i] == 0x2E ||      // .
                         name[i] == 0xB7 ||      // mid dot
@@ -100,6 +101,14 @@ namespace MXG.Core
                     {
                         return false;
                     }
+                    */
+                    if (name[i] == 0x2D) { return true; }       // -
+                    if (name[i] == 0x2E) { return true; }      // .
+                    if (name[i] == 0xB7) { return true; }      // mid dot
+                    if (name[i] >= 0x30 && name[i] <= 0x39) { return true; }  // 0-9
+                    if (name[i] >= 0x300 && name[i] <= 0x036F) { return true; }
+                    if (name[i] >= 0x203F && name[i] <= 0x2040) { return true; }
+                    return false;
                 }
             }
             return true;
@@ -187,6 +196,7 @@ namespace MXG.Core
         /// <returns>True if the character is valid, otherwise false</returns>
         private static bool ValidateStartCharacter(char c)
         {
+            /*
             if (c == 0x3A ||                    // :
                 c == 0x5F ||                    // _
                 (c >= 0x41 && c <= 0x5A) ||     // A-Z
@@ -201,8 +211,9 @@ namespace MXG.Core
                 (c >= 0x2C00 && c <= 0x2FEF) ||
                 (c >= 0x3001 && c <= 0xD7FF) ||
                 (c >= 0xF900 && c <= 0xFDCF) ||
-                (c >= 0xFDF0 && c <= 0xFFFD) ||
-                (c >= 0x10000 && c <= 0xEFFFF))
+                (c >= 0xFDF0 && c <= 0xFFFD)// ||
+               // (c >= 0x10000 && c <= 0xEFFFF)) // Not applicable
+               )
             {
                 return true;
             }
@@ -210,6 +221,24 @@ namespace MXG.Core
             {
                 return false;
             }
+            */
+            if (c == 0x3A) { return true; }
+            if (c == 0x5F) { return true; }
+            if (c >= 0x41 && c <= 0x5A) { return true; }
+            if (c >= 0x61 && c <= 0x7A) { return true; }
+            if (c >= 0xC0 && c <= 0xD6) { return true; }
+            if (c >= 0xD8 && c <= 0xF6) { return true; }
+            if (c >= 0xF8 && c <= 0x2FF) { return true; }
+            if (c >= 0x370 && c <= 0x37D) { return true; }
+            if (c >= 0x37F && c <= 0x1FFF) { return true; }
+            if (c >= 0x200C && c <= 0x200D) { return true; }
+            if (c >= 0x2070 && c <= 0x218F) { return true; }
+            if (c >= 0x2C00 && c <= 0x2FEF) { return true; }
+            if (c >= 0x3001 && c <= 0xD7FF) { return true; }
+            if (c >= 0xF900 && c <= 0xFDCF) { return true; }
+            if (c >= 0xFDF0 && c <= 0xFFFD) { return true; }
+            //if (c >= 0x10000 && c <= 0xEFFFF) { return true; } // Not applicable
+            return false;
         }
 
 

@@ -59,28 +59,28 @@ namespace MXGTest
         }
 
         [Description("Test the static factory method CreateXmlElement for name validation (name and name space)")]
-        [TestCase("tag", null, false)]      // valid
-        [TestCase("X", null, false)]        // valid
-        [TestCase("_", null, false)]        // valid
-        [TestCase("", null, true)]          // invalid
-        [TestCase(null, null, true)]        // invalid
-        [TestCase("\t", null, true)]        // invalid
-        [TestCase("\xB7_element", null, true)] // invalid
-        [TestCase("tag", "", true)]         // invalid
-        [TestCase("X", null, false)]        // valid
-        [TestCase("_", "_", false)]         // valid
-        [TestCase("", "x", true)]           // invalid
-        [TestCase(null, "ns", true)]        // invalid
-        [TestCase("\t", "ns", true)]        // invalid
-        [TestCase("\xB7_element", "x", true)] // invalid
-        [TestCase("tag", "\xB7", true)]     // invalid
-        [TestCase("tag", "ns", false)]      // valid
-        public void CreateXmlElementTest3(string name, string nameSpace, bool exceptionExpected)
+        [TestCase("tag", null, true)]      // valid
+        [TestCase("X", null, true)]        // valid
+        [TestCase("_", null, true)]        // valid
+        [TestCase("", null, false)]          // invalid
+        [TestCase(null, null, false)]        // invalid
+        [TestCase("\t", null, false)]        // invalid
+        [TestCase("\xB7_element", null, false)] // invalid
+        [TestCase("tag", "", false)]         // invalid
+        [TestCase("X", null, true)]        // valid
+        [TestCase("_", "_", true)]         // valid
+        [TestCase("", "x", false)]           // invalid
+        [TestCase(null, "ns", false)]        // invalid
+        [TestCase("\t", "ns", false)]        // invalid
+        [TestCase("\xB7_element", "x", false)] // invalid
+        [TestCase("tag", "\xB7", false)]     // invalid
+        [TestCase("tag", "ns", true)]      // valid
+        public void CreateXmlElementTest3(string name, string nameSpace, bool expected)
         {
             try
             {
                 XmlElement element = XmlElement.CreateXmlElement(name, nameSpace, false);
-                if (exceptionExpected)
+                if (!expected)
                 {
                     Assert.Fail();
                     return;
@@ -88,7 +88,7 @@ namespace MXGTest
             }
             catch (Exception e)
             {
-                if (!exceptionExpected)
+                if (expected)
                 {
                     Assert.Fail();
                 }
@@ -211,18 +211,18 @@ namespace MXGTest
         }
 
         [Description("Test the Exception Handling of the XmlElement class")]
-        [TestCase("n",null, null, null, false)]       // valid
-        [TestCase("\t", null, null, null, true)]       // invalid
-        [TestCase("\n", null, null, null, true)]       // invalid
-        [TestCase("n", "n", null, null, false)]       // valid
-        [TestCase("n", "", null, null, true)]       // invalid
-        [TestCase("n", null, "x", null, false)]       // valid
-        [TestCase("n", null, "x", "y", false)]       // valid
-        [TestCase("n", null, "x", "", false)]       // valid
-        [TestCase("n", null, "", null, true)]       // invalid
-        [TestCase("n", null, "\t", null, true)]       // invalid
-        [TestCase("x", "x", "x", "\t", false)]       // valid
-        public void XmleElementErrorTest(string name, string nameSpace, string attributeName, string attributeValue, bool exceptionExpected)
+        [TestCase("n",null, null, null, true)]       // valid
+        [TestCase("\t", null, null, null, false)]       // invalid
+        [TestCase("\n", null, null, null, false)]       // invalid
+        [TestCase("n", "n", null, null, true)]       // valid
+        [TestCase("n", "", null, null, false)]       // invalid
+        [TestCase("n", null, "x", null, true)]       // valid
+        [TestCase("n", null, "x", "y", true)]       // valid
+        [TestCase("n", null, "x", "", true)]       // valid
+        [TestCase("n", null, "", null, false)]       // invalid
+        [TestCase("n", null, "\t", null, false)]       // invalid
+        [TestCase("x", "x", "x", "\t", true)]       // valid
+        public void XmleElementErrorTest(string name, string nameSpace, string attributeName, string attributeValue, bool expected)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace MXGTest
                 {
                     element.AddAttribute(attributeName, false);
                 }
-                if (exceptionExpected)
+                if (!expected)
                 {
                     Assert.Fail();
                     return;
@@ -243,7 +243,7 @@ namespace MXGTest
             }
             catch (Exception e)
             {
-                if (!exceptionExpected)
+                if (expected)
                 {
                     Assert.Fail();
                 }
