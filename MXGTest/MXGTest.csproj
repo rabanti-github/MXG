@@ -63,7 +63,9 @@
     <Compile Include="ValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlAttributeTest.cs" />
+    <Compile Include="XmlDocumentTest.cs" />
     <Compile Include="XmlElementTest.cs" />
+    <Compile Include="XmlExceptionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

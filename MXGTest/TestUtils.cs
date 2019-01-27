@@ -43,6 +43,37 @@ namespace MXGTest
         }
 
         /// <summary>
+        /// Splits a string into two-dimensional  and replaces elements with a null surrogate to null
+        /// </summary>
+        /// <param name="input">Input value</param>
+        /// <param name="delimiter">Split delimiter</param>
+        /// <param name="subDelimiter">Split delimiter for 2nd dimension</param>
+        /// <returns>string array. If null was passed, an empty array is returned</returns>
+        public static string[][] SplitValues(string input, char delimiter, char subDelimiter, string nullSurrogate)
+        {
+            string[][] temp = SplitValuesInternal(input, delimiter, subDelimiter);
+            List<string> tempList = new List<string>();
+            List<string[]> tempList2 = new List<string[]>();
+            foreach(string[] tokens in temp)
+            {
+                tempList.Clear();
+                foreach(string token in tokens)
+                {
+                    if (token != nullSurrogate)
+                    {
+                        tempList.Add(token);
+                    }
+                    else
+                    {
+                        tempList.Add(null);
+                    }
+                }
+                tempList2.Add(tempList.ToArray());
+            }
+            return tempList2.ToArray();
+        }
+
+        /// <summary>
         /// Splits a string into one- or two-dimensional tokens
         /// </summary>
         /// <param name="input">Input value</param>
@@ -124,6 +155,8 @@ namespace MXGTest
                 }
             }
         }
+
+
 
     }
 }

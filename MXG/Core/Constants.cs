@@ -25,7 +25,7 @@ namespace MXG.Core
         public const string DEFAULT_XML_DECLARATION = "<?xml version=\"1.0\"";
         public const string ENCODING_NAME = " encoding=\"";
         public const string STANDALONE_NAME_YES = " standalone=\"yes\"";
-        public const string STANDALONE_NAME_NO = " standalone =\"no\"";
+        public const string STANDALONE_NAME_NO = " standalone=\"no\"";
         public const string CLOSING_QUOT = "\"";
         public const string XML_TERMINATOR = "?>";
         public const string UTF8_NAME = "UTF-8";
