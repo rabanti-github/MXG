@@ -10,7 +10,7 @@ using NUnit.Framework;
 using System;
 using System.Text;
 
-namespace MXGTest
+namespace MXGTest.Core
 {
     [TestFixture, Description("Test class for XmlElement class")]
     public class XmlElementTest

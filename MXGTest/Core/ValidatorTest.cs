@@ -9,7 +9,7 @@ using MXG.Core;
 using NUnit.Framework;
 
 
-namespace MXGTest
+namespace MXGTest.Core
 {
     [TestFixture, Description("Test class for Validator class")]
     public class ValidatorTest

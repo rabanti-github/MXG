@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MXGTest
+namespace MXGTest.Core
 {
     [TestFixture, Description("Test class for XmlException class")]
     public class XmlExceptionTest
