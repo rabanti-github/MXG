@@ -30,6 +30,7 @@ namespace MXG.Relationships
         /// </summary>
         /// <param name="xmlns">XML name space declaration (scheme) of the content type document</param>
         /// <param name="estimatedElementCount">The estimated element count of the relationship document</param>
+        /// <remarks>The name space is mandatory. However, an empty string will be processed as is. A null value will interpreted as empty attribute "xmlns", which may be useless</remarks>
         public XmlContentTypes(string xmlns, int estimatedElementCount = 10)
         {
             this.ContentTypeDocument = new XmlDocument(estimatedElementCount);

@@ -14,6 +14,8 @@ namespace MXG.Core
     {
         private List<XmlElement> children;
         private StringBuilder documentBuilder;
+        private string standalone = null;
+        private string encoding = null; 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlDocument"/> class.
@@ -24,24 +26,27 @@ namespace MXG.Core
         public XmlDocument(int estimatedElementCount = 10, string encoding = Constants.UTF8_NAME, bool? standalone = true)
         {
             this.documentBuilder = new StringBuilder(Constants.DEFAULT_STRING_BUILDER_SIZE);
+            if (estimatedElementCount < 0)
+            {
+                estimatedElementCount = 0;
+            }
             this.children = new List<XmlElement>(estimatedElementCount);
             this.documentBuilder.Append(Constants.DEFAULT_XML_DECLARATION);
             if (!string.IsNullOrEmpty(encoding))
             {
-                this.documentBuilder.Append(Constants.ENCODING_NAME).Append(encoding).Append(Constants.CLOSING_QUOT);
+                this.encoding = Constants.ENCODING_NAME + encoding + Constants.CLOSING_QUOT;
             }
             if (standalone.HasValue)
             {
                 if (standalone.Value == true)
                 {
-                    this.documentBuilder.Append(Constants.STANDALONE_NAME_YES);
+                    this.standalone = Constants.STANDALONE_NAME_YES;
                 }
                 else
                 {
-                    this.documentBuilder.Append(Constants.STANDALONE_NAME_NO);
+                    this.standalone = Constants.STANDALONE_NAME_NO;
                 }
             }
-            this.documentBuilder.Append(Constants.XML_TERMINATOR);
         }
 
         /// <summary>
@@ -90,6 +95,17 @@ namespace MXG.Core
         /// <returns>Non-beautified XML string</returns>
         public override string GetXmlString()
         {
+            this.documentBuilder.Clear();
+            this.documentBuilder.Append(Constants.DEFAULT_XML_DECLARATION);
+            if (this.encoding != null)
+            {
+                this.documentBuilder.Append(this.encoding);
+            }
+            if (this.standalone != null)
+            {
+                this.documentBuilder.Append(this.standalone);
+            }
+            this.documentBuilder.Append(Constants.XML_TERMINATOR);
             int len = this.children.Count;
             for(int i = 0; i < len; i++)
             {

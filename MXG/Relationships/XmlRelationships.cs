@@ -27,7 +27,7 @@ namespace MXG.Relationships
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlRelationships"/> class
         /// </summary>
-        /// <param name="xmlns">XML name space declaration (scheme) of the relationship document</param>
+        /// <param name="xmlns">XML name space declaration (scheme) of the relationship document. Since mandatory, null will be transformed into an empty string</param>
         /// <param name="estimatedElementCount">The estimated element count of the relationship document</param>
         public XmlRelationships(string xmlns, int estimatedElementCount = 10)
         {

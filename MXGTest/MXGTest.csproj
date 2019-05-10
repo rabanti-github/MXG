@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PerformanceTest.cs" />
+    <Compile Include="Relationships\XmlContentTypesTest.cs" />
     <Compile Include="Relationships\RelationshipSectionTest.cs" />
     <Compile Include="Relationships\XmlDocumentCollectionTest.cs" />
     <Compile Include="TestUtils.cs" />
