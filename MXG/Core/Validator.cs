@@ -10,7 +10,10 @@ using System.Text;
 
 namespace MXG.Core
 {
-    public class Validator
+    /// <summary>
+    /// Static class to provide methods for the validation of XML elements or their content
+    /// </summary>
+    public static class Validator
     {
         /// <summary>
         /// Method to escape XML characters in an XML attribute
@@ -69,7 +72,6 @@ namespace MXG.Core
             return Validator.ValidateXmlName(name);
         }
 
-
         /// <summary>
         /// Method to validate a XML element, name space or attribute name regarding general validity
         /// </summary>
@@ -90,18 +92,6 @@ namespace MXG.Core
             {
                 if (!Validator.ValidateStartCharacter(name[i]))
                 {   // Check additional, allowed characters after first character
-                    /*
-                    if (!(name[i] == 0x2D ||    // -
-                        name[i] == 0x2E ||      // .
-                        name[i] == 0xB7 ||      // mid dot
-                        (name[i] >= 0x30 && name[i] <= 0x39) ||  // 0-9
-                        (name[i] >= 0x300 && name[i] <= 0x036F) ||
-                        (name[i] >= 0x203F && name[i] <= 0x2040)
-                        ))
-                    {
-                        return false;
-                    }
-                    */
                     if (name[i] == 0x2D) { return true; }       // -
                     if (name[i] == 0x2E) { return true; }      // .
                     if (name[i] == 0xB7) { return true; }      // mid dot
@@ -196,32 +186,6 @@ namespace MXG.Core
         /// <returns>True if the character is valid, otherwise false</returns>
         private static bool ValidateStartCharacter(char c)
         {
-            /*
-            if (c == 0x3A ||                    // :
-                c == 0x5F ||                    // _
-                (c >= 0x41 && c <= 0x5A) ||     // A-Z
-                (c >= 0x61 && c <= 0x7A) ||     // a-z
-                (c >= 0xC0 && c <= 0xD6) ||
-                (c >= 0xD8 && c <= 0xF6) ||
-                (c >= 0xF8 && c <= 0x2FF) ||
-                (c >= 0x370 && c <= 0x37D) ||
-                (c >= 0x37F && c <= 0x1FFF) ||
-                (c >= 0x200C && c <= 0x200D) ||
-                (c >= 0x2070 && c <= 0x218F) ||
-                (c >= 0x2C00 && c <= 0x2FEF) ||
-                (c >= 0x3001 && c <= 0xD7FF) ||
-                (c >= 0xF900 && c <= 0xFDCF) ||
-                (c >= 0xFDF0 && c <= 0xFFFD)// ||
-               // (c >= 0x10000 && c <= 0xEFFFF)) // Not applicable
-               )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            */
             if (c == 0x3A) { return true; }
             if (c == 0x5F) { return true; }
             if (c >= 0x41 && c <= 0x5A) { return true; }
@@ -240,7 +204,6 @@ namespace MXG.Core
             //if (c >= 0x10000 && c <= 0xEFFFF) { return true; } // Not applicable
             return false;
         }
-
 
         /// <summary>
         /// Struct to handle the validation of XML content

@@ -11,6 +11,23 @@ namespace MXGTest.Core
     [TestFixture, Description("Test class for XmlDocument class")]
     public class XmlDocumentTest
     {
+
+        [Description("Test the constructor of the XmlDocument class with the available properties")]
+        [TestCase(10, "UTF-8", true, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")]
+        [TestCase(0, "ASCII", false, "<?xml version=\"1.0\" encoding=\"ASCII\" standalone=\"no\"?>")]
+        [TestCase(-1, null, null, "<?xml version=\"1.0\"?>")]
+        [TestCase(5, "", null, "<?xml version=\"1.0\"?>")]
+        public void ConstructorTest(int estimatedContentTypeCount, string encoding, bool? standalone, string expectedString)
+        {
+            XmlDocument document = new XmlDocument(estimatedContentTypeCount, encoding, standalone);
+
+            Assert.Multiple(() =>
+            {
+                Assert.IsNotNull(document);
+                Assert.AreEqual(document.GetXmlString(), expectedString);
+            });
+        }
+
         [Description("Test the AddChild method")]
         [TestCase("el¦!!¦!!", "ASCII", null, "<?xml version=\"1.0\" encoding=\"ASCII\"?><el/>")]
         [TestCase("el¦!!¦!!", "UTF-8", false, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><el/>")]

@@ -10,10 +10,12 @@ using System.Text;
 
 namespace MXG.Core
 {
+    /// <summary>
+    /// Class represents a concrete XML element, that is part of an XML document
+    /// </summary>
+    /// <seealso cref="MXG.Core.AbstractXmlElement" />
     public class XmlElement : AbstractXmlElement
     {
-
-
         private int estimatedChildCount;
         private int estimatedAttributeCount;
 

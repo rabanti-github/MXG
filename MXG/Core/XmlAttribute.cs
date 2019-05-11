@@ -9,10 +9,12 @@ using System.Text;
 
 namespace MXG.Core
 {
+    /// <summary>
+    /// Class representing an XML attribute
+    /// </summary>
+    /// <seealso cref="MXG.Core.AbstractXmlElement" />
     public class XmlAttribute : AbstractXmlElement
     {
-
-
         /// <summary>
         /// Creates an XML attribute with a name and an optional value
         /// </summary>

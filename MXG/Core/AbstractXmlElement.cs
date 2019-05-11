@@ -9,6 +9,9 @@ using System.Text;
 
 namespace MXG.Core
 {
+    /// <summary>
+    /// Abstract class representing an XML element of any kind
+    /// </summary>
     public abstract class AbstractXmlElement
     {
         private string value = null;

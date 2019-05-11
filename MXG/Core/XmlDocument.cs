@@ -10,6 +10,10 @@ using System.Text;
 
 namespace MXG.Core
 {
+    /// <summary>
+    /// Class represents an XML document that contains user defined data
+    /// </summary>
+    /// <seealso cref="MXG.Core.AbstractXmlDocument" />
     public class XmlDocument : AbstractXmlDocument
     {
         private List<XmlElement> children;

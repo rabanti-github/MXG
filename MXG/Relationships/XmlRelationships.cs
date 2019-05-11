@@ -60,7 +60,5 @@ namespace MXG.Relationships
         {
             return this.RelationshipDocument.GetXmlString();
         }
-
-
     }
 }

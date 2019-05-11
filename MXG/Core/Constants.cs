@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace MXG.Core
 {
+    /// <summary>
+    /// Static class to provide invariant values that are used multiple times by other classes 
+    /// </summary>
     public static class Constants
     {
-
         public const int DEFAULT_STRING_BUILDER_SIZE = 512;
 
         public const char SANITIZING_CHAR = ' ';
@@ -42,7 +44,5 @@ namespace MXG.Core
         public const string TARGET_NAME = "Target";
         public const string RELATIONSHIPS_NAME = "Relationships";
         public const string RELATIONSHIP_NAME = "Relationship";
-
-
     }
 }

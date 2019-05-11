@@ -7,6 +7,9 @@
 
 namespace MXG.Core
 {
+    /// <summary>
+    /// /Abstract class representing an XML document of any kind
+    /// </summary>
     public abstract class AbstractXmlDocument
     {
         /// <summary>

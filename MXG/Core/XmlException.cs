@@ -10,7 +10,7 @@ using System;
 namespace MXG.Core
 {
     /// <summary>
-    /// General MXG exception
+    /// General MXG exception class
     /// </summary>
     /// <seealso cref="System.Exception" />
     public class XmlException : Exception

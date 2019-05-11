@@ -14,7 +14,6 @@ namespace MXG.Relationships
     /// </summary>
     public class XmlContentTypes : AbstractXmlDocument
     {
-
         private XmlElement contentTypes;
 
         /// <summary>
