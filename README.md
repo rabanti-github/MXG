@@ -15,11 +15,13 @@ A main Goal is to reduce the generation time of XML documents. This has some **c
 
 ## Performance
 
-First performance test revealed a performance advantage of MXG over System.Xml, depending on the document size:
+First benchmarks revealed a performance advantage of MXG over System.Xml, depending on the document size:
 * **2-4 times faster** (small documents with few elements)
 * **8-9 times faster** (large documents with may elements)
 
-However, these figures may vary depending on hardware, software or test content.
+However, these figures may vary, depending on hardware, software or test content.
+
+The tests were performed by generating the same documents once by System.Xml and once by MXG.
 
 ## License
 MXG is published under the MIT license.

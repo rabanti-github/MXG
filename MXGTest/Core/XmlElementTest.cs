@@ -15,7 +15,7 @@ namespace MXGTest.Core
     [TestFixture, Description("Test class for XmlElement class")]
     public class XmlElementTest
     {
-        [Description("Test the static factory method CreateXmlElement (without namespace). Name checks are omitted in this scenario")]
+        [Description("Test the static factory method CreateXmlElement (without name space). Name checks are omitted in this scenario")]
         [TestCase ("tag", "t1", false, "<tag>t1</tag>", false)]
         [TestCase("tag", null, false, "<tag/>", true)]
         [TestCase("xyz", null, true, "<xyz/>", true)]
