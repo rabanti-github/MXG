@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{90D3441C-C15D-48DF-BEBD-4021B17A5D4A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Dummy</RootNamespace>
-    <AssemblyName>Dummy</AssemblyName>
+    <RootNamespace>MXGBenchmark</RootNamespace>
+    <AssemblyName>MXGBenchmark</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
