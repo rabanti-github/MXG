@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>Raphae Stoeckli</Authors>
+    <Company />
+    <PackageId>MXGDotNetCore</PackageId>
+    <Description>MXGDotNetCore is the .NET Core version of the .NET library MXG</Description>
+    <Copyright>2019 Raphael Stoeckli</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/rabanti-github/MXG/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/rabanti-github/MXG</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rabanti-github/MXG</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>XML</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Product>MXG</Product>
+    <AssemblyName>MXG</AssemblyName>
+    <RootNamespace>MXG</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\MXG\Core\AbstractXmlDocument.cs" Link="Core\AbstractXmlDocument.cs" />
+    <Compile Include="..\MXG\Core\AbstractXmlElement.cs" Link="Core\AbstractXmlElement.cs" />
+    <Compile Include="..\MXG\Core\Constants.cs" Link="Core\Constants.cs" />
+    <Compile Include="..\MXG\Core\Validator.cs" Link="Core\Validator.cs" />
+    <Compile Include="..\MXG\Core\XmlAttribute.cs" Link="Core\XmlAttribute.cs" />
+    <Compile Include="..\MXG\Core\XmlDocument.cs" Link="Core\XmlDocument.cs" />
+    <Compile Include="..\MXG\Core\XmlElement.cs" Link="Core\XmlElement.cs" />
+    <Compile Include="..\MXG\Core\XmlException.cs" Link="Core\XmlException.cs" />
+    <Compile Include="..\MXG\Relationships\XmlContentTypes.cs" Link="Relationships\XmlContentTypes.cs" />
+    <Compile Include="..\MXG\Relationships\XmlDocumentCollection.cs" Link="Relationships\XmlDocumentCollection.cs" />
+    <Compile Include="..\MXG\Relationships\XmlRelationships.cs" Link="Relationships\XmlRelationships.cs" />
+  </ItemGroup>
+
+</Project>

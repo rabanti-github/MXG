@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MXG - Minimalist XML Generator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Minimalist XML Generator for .NET")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MXG")]
