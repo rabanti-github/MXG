@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MXG - Minimalist XML Generator")]
+[assembly: AssemblyTitle("MXGBenchmark")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MXG")]
-[assembly: AssemblyCopyright("Copyright © Raphael Stoeckli 2019")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Raphael Stoeckli")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("88da04d2-d1a0-4a59-ae5e-73151764833b")]
+[assembly: Guid("90d3441c-c15d-48df-bebd-4021b17a5d4a")]
 
 // Version information for an assembly consists of the following four values:
 //

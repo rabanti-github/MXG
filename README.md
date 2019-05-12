@@ -20,13 +20,9 @@ First benchmarks revealed a performance advantage of MXG over System.Xml, depend
 * **8-9 times faster** (large documents with many elements)
 
 In general, MXG seems to be more efficient, when it comes to the handling of XML attributes. Large documents with many attributes result in a even higher performance.
-However, these figures may vary, depending on hardware, software or test content.
+However, these figures may vary, depending on hardware, software, test setup or test content.
 
 The tests were performed by generating the same documents once by System.Xml and once by MXG.
-
-## Known Issues
-* Currently, a very high number of XML elements (>5000) in one XMl document can cause a crash of MXG. This issue is currently under investigation
-* The library shows a better performance, when handling many attributes in few elements. This performance ratio flips on many elements and few attributes. This is under investigation
 
 ## License
 MXG is published under the MIT license.
