@@ -32,6 +32,7 @@ namespace MXG.Core
             using (StreamWriter writer = new StreamWriter(fileName, false, encoding, bufferSize))
             {
                 writer.Write(this.GetXmlString());
+                writer.Flush();
             }
         }
 
@@ -45,32 +46,44 @@ namespace MXG.Core
             using (StreamWriter writer = new StreamWriter(fileName, false, encoding, bufferSize))
             {
                 await writer.WriteAsync(this.GetXmlString());
+                await writer.FlushAsync();
             }
         }
 
         public void SaveAsStream(Stream stream)
         {
-            this.SaveAsStream(stream, Encoding.UTF8);
+            this.SaveAsStream(stream, Encoding.UTF8, Constants.DEFAULT_STREAM_BUFFER_SIZE, false);
         }
 
-        public void SaveAsStream(Stream stream, Encoding encoding, int bufferSize = Constants.DEFAULT_STREAM_BUFFER_SIZE)
+        public void SaveAsStream(Stream stream, bool leaveOpen = false)
         {
-            using (StreamWriter writer = new StreamWriter(stream, encoding, bufferSize))
-            {
-                writer.Write(this.GetXmlString());
-            }
+            SaveAsStream(stream, Encoding.UTF8, Constants.DEFAULT_STREAM_BUFFER_SIZE, leaveOpen);
+        }
+
+            public void SaveAsStream(Stream stream, Encoding encoding, int bufferSize = Constants.DEFAULT_STREAM_BUFFER_SIZE, bool leaveOpen = false)
+        {
+            using (StreamWriter writer = new StreamWriter(stream, encoding, bufferSize, leaveOpen))
+             {
+            writer.Write(this.GetXmlString());
+            stream.Flush();
+             }
         }
 
         public async Task SaveAsStreamAsync(Stream stream)
         {
-            await this.SaveAsStreamAsync(stream, Encoding.UTF8);
+            await this.SaveAsStreamAsync(stream, Encoding.UTF8, Constants.DEFAULT_STREAM_BUFFER_SIZE, false);
         }
 
-        public async Task SaveAsStreamAsync(Stream stream, Encoding encoding, int bufferSize = Constants.DEFAULT_STREAM_BUFFER_SIZE)
+        public async Task SaveAsStreamAsync(Stream stream, bool leaveOpen = false)
         {
-            using (StreamWriter writer = new StreamWriter(stream, encoding, bufferSize))
+            await SaveAsStreamAsync(stream, Encoding.UTF8, Constants.DEFAULT_STREAM_BUFFER_SIZE, leaveOpen);
+        }
+            public async Task SaveAsStreamAsync(Stream stream, Encoding encoding, int bufferSize = Constants.DEFAULT_STREAM_BUFFER_SIZE, bool leaveOpen = false)
+        {
+            using (StreamWriter writer = new StreamWriter(stream, encoding, bufferSize, leaveOpen))
             {
                 await writer.WriteAsync(this.GetXmlString());
+                await stream.FlushAsync();
             }
         }
 

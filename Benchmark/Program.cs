@@ -79,7 +79,7 @@ namespace Dummy
 
             for (int n = 0; n < numberOfIterations; n++)
             {
-                Console.WriteLine("Iteration " + n + 1);
+                Console.WriteLine("Iteration " + (n + 1));
                 elements.Clear();
                 attributeNames.Clear();
                 attributeValues.Clear();

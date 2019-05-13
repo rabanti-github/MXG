@@ -59,6 +59,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AbstractDocumentSaveTest.cs" />
     <Compile Include="PerformanceTest.cs" />
     <Compile Include="Relationships\XmlContentTypesTest.cs" />
     <Compile Include="Relationships\RelationshipSectionTest.cs" />
