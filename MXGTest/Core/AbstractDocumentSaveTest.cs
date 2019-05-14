@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using MXG.Core;
 using NUnit.Framework;
 
@@ -15,9 +16,29 @@ namespace MXGTest.Core
     [TestFixture, Description("Test class to cover shared save functions of AbstractXmlDocument")]
     class AbstractDocumentSaveTest
     {
-        [Description("Test the SaveAsStream method (save to stream synchronous)")]
+        [Description("Test the SaveAsStream method with terminating stream (save to stream synchronous)")]
         [Test]
         public void SaveAsStreamTest()
+        {
+            string file = GetTempFileName();
+            string expectedString, result;
+            bool status;
+            XmlDocument doc = GetSampleDocument(out expectedString);
+            using(FileStream fs = new FileStream(file, FileMode.Create))
+            {
+                doc.SaveAsStream(fs);
+            }
+            result = ReadAndDeleteTestFile(file, 1000, out status);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(status);
+                Assert.AreEqual(expectedString, result);
+            });
+        }
+
+        [Description("Test the SaveAsStream method with open stream (save to stream synchronous)")]
+        [Test]
+        public void SaveAsStreamTest2()
         {
             string expectedString;
             XmlDocument doc = GetSampleDocument(out expectedString);
@@ -31,7 +52,7 @@ namespace MXGTest.Core
 
         [Description("Test the SaveAsStream method with all parameters (save to stream synchronous)")]
         [Test]
-        public void SaveAsStreamTest2()
+        public void SaveAsStreamTest3()
         {
             string expectedString;
             XmlDocument doc = GetSampleDocument(out expectedString);
@@ -43,54 +64,164 @@ namespace MXGTest.Core
             Assert.AreEqual(result, expectedString);
         }
 
-        [Description("Test the Save method (save to file synchronous)")]
+        [Description("Test the SaveAsStreamAsync method with terminating stream (save to stream asynchronous)")]
+        [Test]
+        public async Task SaveAsStreamAsyncTest()
+        {
+            string file = GetTempFileName();
+            string expectedString, result;
+            bool status;
+            XmlDocument doc = GetSampleDocument(out expectedString);
+            await Task.Run(async () =>
+            {
+                using (FileStream fs = new FileStream(file, FileMode.Create))
+                {
+                    await doc.SaveAsStreamAsync(fs);
+                }
+            });
+            result = ReadAndDeleteTestFile(file, 1000, out status);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(status);
+                Assert.AreEqual(expectedString, result);
+            });
+        }
+
+        [Description("Test the SaveAsStreamAsync method with open stream (save to stream asynchronous)")]
+        [Test]
+        public async Task SaveAsStreamAsyncTest2()
+        {
+            string expectedString;
+            XmlDocument doc = GetSampleDocument(out expectedString);
+            MemoryStream ms = new MemoryStream();
+            await Task.Run(async () =>
+            {
+                await doc.SaveAsStreamAsync(ms, true);
+            });
+            ms.Position = 0;
+            StreamReader sr = new StreamReader(ms);
+            string result = sr.ReadToEnd();
+            Assert.AreEqual(result, expectedString);
+        }
+
+        [Description("Test the SaveAsStreamAsync method with all parameters (save to stream asynchronous)")]
+        [Test]
+        public async Task SaveAsStreamAsyncTest3()
+        {
+            string expectedString;
+            XmlDocument doc = GetSampleDocument(out expectedString);
+            MemoryStream ms = new MemoryStream();
+            await Task.Run(async () =>
+            {
+                await doc.SaveAsStreamAsync(ms, Encoding.ASCII, 1024, true);
+            });
+            ms.Position = 0;
+            StreamReader sr = new StreamReader(ms);
+            string result = sr.ReadToEnd();
+            Assert.AreEqual(result, expectedString);
+        }
+
+        [Description("Test the Save method with filename (save to file synchronous)")]
         [Test]
         public void SaveTest()
         {
-            string expectedString;
-            string file = Path.GetTempPath() + "saveTest_" + DateTime.Now.ToString("YYYYMMddhhmmssffff") + ".xml";
+            string expectedString, result;
+            bool status;
+            string file = GetTempFileName();
             XmlDocument doc = GetSampleDocument(out expectedString);
             doc.Save(file);
-            System.Threading.Thread.Sleep(1000); // Not good, but easy (wait for IO)
-            using(StreamReader sr = new StreamReader(file))
+            result = ReadAndDeleteTestFile(file, 1000, out status);
+            Assert.Multiple(() =>
             {
-                string result = sr.ReadToEnd();
-                Assert.AreEqual(result, expectedString);
-            }
-            try
-            {
-                File.Delete(file);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail("Test file " + file + " could not be deleted: " + ex.Message);
-            }            
+                Assert.IsTrue(status);
+                Assert.AreEqual(expectedString, result);
+            });       
         }
 
         [Description("Test the Save method with all parameters (save to file synchronous)")]
         [Test]
         public void SaveTest2()
         {
-            string expectedString;
-            string file = Path.GetTempPath() + "saveTest_" + DateTime.Now.ToString("YYYYMMddhhmmssffff") + ".xml";
+            string expectedString, result;
+            bool status;
+            string file = GetTempFileName();
             XmlDocument doc = GetSampleDocument(out expectedString);
             doc.Save(file, Encoding.UTF8, 512);
-            System.Threading.Thread.Sleep(1000); // Not good, but easy (wait for IO)
-            using (StreamReader sr = new StreamReader(file))
+            result = ReadAndDeleteTestFile(file, 1000, out status);
+            Assert.Multiple(() =>
             {
-                string result = sr.ReadToEnd();
-                Assert.AreEqual(result, expectedString);
-            }
+                Assert.IsTrue(status);
+                Assert.AreEqual(expectedString, result);
+            });
+        }
+
+        [Description("Test the SaveAsync method with filename (save to file asynchronous)")]
+        [Test]
+        public async Task SaveAsyncTestAsync()
+        {
+            string expectedString, result;
+            bool status;
+            string file = GetTempFileName();
+            XmlDocument doc = GetSampleDocument(out expectedString);
+            await Task.Run(async () =>
+            {
+                await doc.SaveAsync(file);
+            });
+            result = ReadAndDeleteTestFile(file, 1000, out status);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(status);
+                Assert.AreEqual(expectedString, result);
+            });
+        }
+
+
+        [Description("Test the SaveAsync method with all parameters (save to file asynchronous)")]
+        [Test]
+        public async Task SaveAsynxTest2Async()
+        {
+            string expectedString, result;
+            bool status;
+            string file = GetTempFileName();
+            XmlDocument doc = GetSampleDocument(out expectedString);
+            await Task.Run(async () =>
+            {
+                await doc.SaveAsync(file, Encoding.UTF8, 512);
+            });
+            result = ReadAndDeleteTestFile(file, 1000, out status);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(status);
+                Assert.AreEqual(expectedString, result);
+            });
+        }
+
+
+        private string ReadAndDeleteTestFile(string fileName, int delay, out bool success)
+        {
+            System.Threading.Thread.Sleep(delay); // Not good, but easy (wait for IO)
+            string result = null;
             try
             {
-                File.Delete(file);
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                result = sr.ReadToEnd();
+            }
+                File.Delete(fileName);
+                success = true;
             }
             catch (Exception ex)
             {
-                Assert.Fail("Test file " + file + " could not be deleted: " + ex.Message);
+                Console.WriteLine(ex.Message);
+                success = false;
             }
+            return result;
         }
 
+        private string GetTempFileName()
+        {
+            return Path.GetTempPath() + "saveTest_" + DateTime.Now.ToString("YYYYMMddhhmmssffff") + ".xml";
+        }
 
         private XmlDocument GetSampleDocument(out string stringResult)
         {

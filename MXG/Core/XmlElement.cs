@@ -159,7 +159,7 @@ namespace MXG.Core
             {
                 this.Attributes = new List<XmlAttribute>(this.estimatedAttributeCount);
             }
-            this.Attributes.Add(XmlAttribute.CreateXmlAttribute(name, null, skipNameCheck, false));
+            this.Attributes.Add(XmlAttribute.CreateXmlAttribute(name, "", skipNameCheck, false));
         }
 
         /// <summary>

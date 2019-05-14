@@ -1,16 +1,16 @@
 # MXG
-MGX - Minimalist XML Generator for .NET
-
-**Note: This is not production ready yet. Testing in progress.**
+MGX - Minimalist XML Generator for .NET and .NET Core
 
 ## Description
 
-This project is intended as small, fast and simple .NET (currently 4.6 or higher) library to create valid XML documents, that are according to the XML specifications and applicable to MSXML.
+This project is intended as small, fast and simple .NET (currently 4.6 or higher) and .NET Core (currently 2.1 or higher) library to create valid XML documents, that are according to the XML specifications and applicable to MSXML.
 
 A main Goal is to reduce the generation time of XML documents. This has some **consequences**:
 * The library has no XML scheme validation
+* The library delivers no indentation
 * The library does not cover special conditions or exceptions, when it comes to XML
 * The library has a small set of methods and properties
+* The library may throw Exceptions since as many internal checks as possible are avoided
 * To get better performance, it is important to know the estimated / expected number of elements per document, sub-element per element and attributes per element
 
 ## Performance

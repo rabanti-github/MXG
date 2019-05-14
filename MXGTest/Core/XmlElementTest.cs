@@ -169,7 +169,7 @@ namespace MXGTest.Core
 
         [Description("Test the method AddChild and AddAttribute with the entire XML element as output. !! is a placeholder for null")]
         [TestCase("tag#att¦v1", "subtag#att2¦v2", "<tag att=\"v1\"><subtag att2=\"v2\"/></tag>")]
-        [TestCase("tag#att¦v1|att2¦v2", "subtag#att3¦v3|att4¦!!", "<tag att=\"v1\" att2=\"v2\"><subtag att3=\"v3\" att4/></tag>")]
+        [TestCase("tag#att¦v1|att2¦v2", "subtag#att3¦v3|att4¦!!", "<tag att=\"v1\" att2=\"v2\"><subtag att3=\"v3\" att4=\"\"/></tag>")]
         /*
         [TestCase("tag2", "subtag¦ns", "<tag2><ns:subtag/></tag2>")]
         [TestCase("tag|ns1", "subtag¦ns¦content1", "<ns1:tag><ns:subtag>content1</ns:subtag></ns1:tag>")]
