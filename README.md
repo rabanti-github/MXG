@@ -1,5 +1,5 @@
 # MXG
-MGX - Minimalist XML Generator for C#
+MGX - Minimalist XML Generator for .NET and .NET Core
 
 ## Description
 
@@ -26,5 +26,3 @@ The tests were performed by generating the same documents once by System.Xml and
 
 ## License
 MXG is published under the MIT license.
-
-MGX - Minimalist XML Generator for .NET and .NET Core
