@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{90D3441C-C15D-48DF-BEBD-4021B17A5D4A}</ProjectGuid>
+    <ProjectGuid>{3B30391B-310C-45CD-8EA4-CF93E7D228FF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MXGBenchmark</RootNamespace>
     <AssemblyName>MXGBenchmark</AssemblyName>

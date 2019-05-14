@@ -19,12 +19,12 @@ namespace MXG.Core
         /// Creates an XML attribute with a name and an optional value
         /// </summary>
         /// <param name="name">Attribute name</param>
-        /// <param name="value">Optional attribute value</param>
+        /// <param name="value">Optional attribute value. Default is empty</param>
         /// <param name="skipNameCheck">If true, the validity check of the attribute name will be skipped</param>
         /// <param name="escapeValue">If true, the attribute value will be escaped</param>
         /// <returns>XML Attribute Object</returns>
         /// <exception cref="XmlException">The XML attribute '" + name + "' contains invalid characters or is empty</exception>
-        public static XmlAttribute CreateXmlAttribute(string name, string value = null, bool skipNameCheck = true, bool escapeValue = true)
+        public static XmlAttribute CreateXmlAttribute(string name, string value = "", bool skipNameCheck = true, bool escapeValue = true)
         {
             if (!skipNameCheck)
             {
@@ -51,9 +51,9 @@ namespace MXG.Core
         /// Constructor with parameters
         /// </summary>
         /// <param name="name">Attribute name</param>
-        /// <param name="value">Attribute value (can be null)</param>
+        /// <param name="value">Attribute value (can be empty)</param>
         /// <exception cref="XmlException">An XML attribute must contain a valid name</exception>
-        public XmlAttribute(string name, string value = null) : base(name, value)
+        public XmlAttribute(string name, string value = "") : base(name, value)
         { }
 
         /// <summary>

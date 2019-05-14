@@ -12,6 +12,7 @@ namespace MXG.Core
     public static class Constants
     {
         public const int DEFAULT_STRING_BUILDER_SIZE = 512;
+        public const int DEFAULT_STREAM_BUFFER_SIZE = 65536;
 
         public const char SANITIZING_CHAR = ' ';
         public const char TAG_END_CHAR = '>';
